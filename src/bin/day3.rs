@@ -1,6 +1,6 @@
+#![allow(dead_code)]
+
 use std::collections::BTreeMap;
-use std::iter::Map;
-use std::ops::Add;
 
 fn main() {
     let data = std::fs::read_to_string("assets/day3.txt").unwrap();
@@ -14,7 +14,7 @@ fn part_one(data: &str) {
         for (pos, c) in l.chars().enumerate() {
             numbers
                 .entry(pos as u32)
-                .or_insert(Vec::new())
+                .or_insert_with(Vec::new)
                 .push(c.to_digit(2).unwrap())
         }
     });
@@ -51,7 +51,7 @@ fn part_two(data: &str) {
         for c in line.chars() {
             numbers
                 .entry(pos)
-                .or_insert(Vec::new())
+                .or_insert_with(Vec::new)
                 .push(c.to_digit(2).unwrap());
         }
     }
@@ -65,7 +65,11 @@ fn part_two(data: &str) {
         let num_ones = oxygen.iter().map(|num| num[i]).sum::<u32>();
         let num_zeros = oxygen.len() as u32 - num_ones;
         let filter_num = if num_ones >= num_zeros { 1 } else { 0 };
-        oxygen = oxygen.iter().filter(|l| l[i] == filter_num).cloned().collect();
+        oxygen = oxygen
+            .iter()
+            .filter(|l| l[i] == filter_num)
+            .cloned()
+            .collect();
 
         let num_ones = co2.iter().map(|num| num[i]).sum::<u32>();
         let num_zeros = co2.len() as u32 - num_ones;

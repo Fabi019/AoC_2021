@@ -13,10 +13,10 @@ fn main() {
     for seg in &segments {
         let mut number_map = HashMap::new();
 
-        let one = seg.segments.iter().find(|s| s.len() == 2).unwrap();
-        let four = seg.segments.iter().find(|s| s.len() == 4).unwrap();
-        let seven = seg.segments.iter().find(|s| s.len() == 3).unwrap();
-        let eight = seg.segments.iter().find(|s| s.len() == 7).unwrap();
+        let one = find(&seg.segments, |s| s.len() == 2);
+        let four = find(&seg.segments,|s| s.len() == 4);
+        let seven = find(&seg.segments,|s| s.len() == 3);
+        let eight = find(&seg.segments,|s| s.len() == 7);
         println!(
             "One = {:?}, Four = {:?}, Seven = {:?}, Eight = {:?}",
             one, four, seven, eight
@@ -28,11 +28,11 @@ fn main() {
             .filter(|s| s.len() == 5)
             .cloned()
             .collect(); // should be 2, 3, 5
-        let three = find(&five_segments, |s| contains(s, one));
+        let three = find(&five_segments, |s| contains(s, &one));
         five_segments.retain(|s| s != &three);
-        let five = find(&five_segments, |s| contains(s, &remove(four, one)));
+        let five = find(&five_segments, |s| contains(s, &remove(&four, &one)));
         five_segments.retain(|s| s != &five);
-        let two = five_segments.get(0).unwrap(); // last remaining
+        let two = five_segments.first().unwrap(); // last remaining
         println!("Three = {:?}, Five = {:?}, Two = {:?}", three, five, two);
 
         let mut six_segments: Vec<Vec<char>> = seg
@@ -41,22 +41,22 @@ fn main() {
             .filter(|s| s.len() == 6)
             .cloned()
             .collect(); // should be 0, 6, 9
-        let nine = find(&six_segments, |s| contains(s, four));
+        let nine = find(&six_segments, |s| contains(s, &four));
         six_segments.retain(|s| s != &nine);
         let six = find(&six_segments, |s| contains(s, &five));
         six_segments.retain(|s| s != &six);
-        let zero = six_segments.get(0).unwrap(); // last remaining
+        let zero = six_segments.first().unwrap(); // last remaining
         println!("Nine = {:?}, Six = {:?}, Zero = {:?}", nine, six, zero);
 
         number_map.insert(zero, 0);
-        number_map.insert(one, 1);
+        number_map.insert(&one, 1);
         number_map.insert(two, 2);
         number_map.insert(&three, 3);
-        number_map.insert(four, 4);
+        number_map.insert(&four, 4);
         number_map.insert(&five, 5);
         number_map.insert(&six, 6);
-        number_map.insert(seven, 7);
-        number_map.insert(eight, 8);
+        number_map.insert(&seven, 7);
+        number_map.insert(&eight, 8);
         number_map.insert(&nine, 9);
 
         let mut number = 0;

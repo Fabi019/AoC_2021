@@ -8,7 +8,7 @@ fn main() {
     let mut lowest_fuel = i32::MAX;
     let mut best_target = 0;
 
-    'outer: for target in min..max+1 {
+    'outer: for target in min..max + 1 {
         let mut total_fuel = 0;
         for &crab in &crabs {
             let mut fuel = i32::abs(crab - target);
@@ -24,5 +24,8 @@ fn main() {
         }
     }
 
-    println!("Best total fuel {} at position {}", lowest_fuel, best_target);
+    println!(
+        "Best total fuel {} at position {}",
+        lowest_fuel, best_target
+    );
 }

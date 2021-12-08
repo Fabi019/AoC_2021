@@ -9,8 +9,8 @@ fn main() {
     let numbers: Vec<u8> = lines[0].split(',').map(|s| s.parse().expect(s)).collect();
 
     let mut boards = Vec::new();
-    for board in 1..lines.len() {
-        boards.push(BingoBoard::new(lines[board]));
+    for &board in lines.iter().skip(1) {
+        boards.push(BingoBoard::new(board));
     }
 
     for i in &numbers {
@@ -36,12 +36,12 @@ fn main() {
 #[derive(Debug)]
 struct BingoEntry {
     number: u8,
-    marked: u8
+    marked: u8,
 }
 
 #[derive(Debug)]
 struct BingoBoard {
-    board: Vec<Vec<BingoEntry>>
+    board: Vec<Vec<BingoEntry>>,
 }
 
 impl BingoBoard {
@@ -81,7 +81,7 @@ impl BingoBoard {
         for vec in &self.board {
             let sum = vec.iter().map(|e| e.marked).sum::<u8>();
             if sum == 5 {
-                return true
+                return true;
             }
         }
         false
@@ -94,7 +94,7 @@ impl BingoBoard {
                 sum += self.board[row][column].marked;
             }
             if sum == 5 {
-                return true
+                return true;
             }
         }
         false
@@ -112,9 +112,9 @@ impl Display for BingoBoard {
                 } else {
                     sum_of_unmarked += entry.number as u32;
                 }
-                output.push_str("\t");
+                output.push('\t');
             }
-            output.push_str("\n");
+            output.push('\n');
         }
         write!(f, "{}\nSum of unmarked: {}", output, sum_of_unmarked)
     }

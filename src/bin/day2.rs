@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 
 fn main() {
     let data = std::fs::read_to_string("assets/day2.txt").unwrap();
@@ -18,7 +19,12 @@ fn part_one(data: &str) {
             _ => {}
         }
     });
-    println!("horizontal: {}, depth: {}, total: {}", horizontal, depth, horizontal * depth);
+    println!(
+        "horizontal: {}, depth: {}, total: {}",
+        horizontal,
+        depth,
+        horizontal * depth
+    );
 }
 
 fn part_two(data: &str) {
@@ -32,11 +38,16 @@ fn part_two(data: &str) {
             "forward" => {
                 horizontal += value;
                 depth += aim * value;
-            },
+            }
             "down" => aim += value,
             "up" => aim -= value,
             _ => {}
         }
     });
-    println!("horizontal: {}, depth: {}, total: {}", horizontal, depth, horizontal * depth);
+    println!(
+        "horizontal: {}, depth: {}, total: {}",
+        horizontal,
+        depth,
+        horizontal * depth
+    );
 }

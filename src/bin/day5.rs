@@ -1,5 +1,6 @@
 #![feature(vec_retain_mut)]
 #![feature(box_syntax)]
+#![allow(dead_code)]
 
 const BOARD_SIZE: usize = 1000;
 
@@ -41,7 +42,7 @@ struct Point {
 
 impl Point {
     pub fn new(point: &str) -> Point {
-        let point: Vec<&str> = point.split(",").collect();
+        let point: Vec<&str> = point.split(',').collect();
         Point {
             x: point[0].parse().unwrap(),
             y: point[1].parse().unwrap(),

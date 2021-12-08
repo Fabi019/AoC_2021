@@ -1,10 +1,8 @@
-use std::collections::BTreeMap;
-
 fn main() {
     let data = std::fs::read_to_string("assets/day6.txt").unwrap();
-    let mut fishs: Vec<u8> = data.split(",").map(|n| n.parse().unwrap()).collect();
+    let fish: Vec<u8> = data.split(',').map(|n| n.parse().unwrap()).collect();
     let mut fish_map = [0u64; 9];
-    for &i in &fishs {
+    for &i in &fish {
         fish_map[i as usize] += 1;
     }
 
@@ -14,7 +12,7 @@ fn main() {
         let mut fish_to_add = 0;
 
         for age in 0..9 {
-            let mut count = fish_map[age];
+            let count = fish_map[age];
             if age == 0 {
                 fish_to_add += count;
             } else {
