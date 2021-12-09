@@ -27,9 +27,10 @@ fn main() {
 
     let mut basins: Vec<u32> = low_points
         .iter()
+        .copied()
         .map(|(x, y, height)| {
-            let mut done = vec![(*x, *y, **height)];
-            let mut todo: Vec<(usize, usize, u32)> = neighbours(&heightmap, *x, *y);
+            let mut done = vec![(x, y, *height)];
+            let mut todo: Vec<(usize, usize, u32)> = neighbours(&heightmap, x, y);
             todo.retain(|e| e.2 != 9);
             println!("Starting for: {:?}", (x, y, height));
             println!("Initial: {:?}", todo);
@@ -59,21 +60,11 @@ fn neighbours(vec: &[Vec<u32>], x: usize, y: usize) -> Vec<(usize, usize, u32)> 
     let mut neighbours = Vec::new();
     let offsets = [(-1, 0), (0, -1), (1, 0), (0, 1)];
     for offset in offsets {
-        let target_x = clamp_idx(x as i32 + offset.0, vec[0].len() - 1);
-        let target_y = clamp_idx(y as i32 + offset.1, vec.len() - 1);
+        let target_x = (x as i32 + offset.0).clamp(0, (vec[0].len() - 1) as i32) as usize;
+        let target_y = (y as i32 + offset.1).clamp(0, (vec.len() - 1) as i32) as usize;
         if target_y != y || target_x != x {
             neighbours.push((target_x, target_y, vec[target_y][target_x]));
         }
     }
     neighbours
-}
-
-fn clamp_idx(target: i32, max: usize) -> usize {
-    if target < 0 {
-        0
-    } else if target as usize >= max {
-        max
-    } else {
-        target as usize
-    }
 }
