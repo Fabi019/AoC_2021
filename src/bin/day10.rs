@@ -31,7 +31,7 @@ fn main() {
             stack
                 .iter()
                 .rev()
-                .fold(0, |acc, c| acc * 5 + score_map[&token_map[&c]]),
+                .fold(0, |acc, c| acc * 5 + score_map[&token_map[c]]),
         );
     }
     scores.sort_unstable();

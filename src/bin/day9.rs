@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 fn main() {
     let data = std::fs::read_to_string("assets/day9.txt").unwrap();
 
@@ -29,22 +31,20 @@ fn main() {
         .iter()
         .copied()
         .map(|(x, y, height)| {
-            let mut done = vec![(x, y, *height)];
+            let mut done = HashSet::new();
             let mut todo: Vec<(usize, usize, u32)> = neighbours(&heightmap, x, y);
             todo.retain(|e| e.2 != 9);
             println!("Starting for: {:?}", (x, y, height));
             println!("Initial: {:?}", todo);
             while !todo.is_empty() {
                 for &e in &todo {
-                    done.push(e);
+                    done.insert(e);
                 }
                 todo = todo
                     .iter()
                     .flat_map(|e| neighbours(&heightmap, e.0, e.1))
                     .filter(|e| e.2 != 9 && !done.contains(e))
                     .collect();
-                todo.sort_unstable();
-                todo.dedup();
                 println!("New: {:?}", todo);
             }
             done.len() as u32

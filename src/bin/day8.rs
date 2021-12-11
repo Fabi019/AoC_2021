@@ -14,9 +14,9 @@ fn main() {
         let mut number_map = HashMap::new();
 
         let one = find(&seg.segments, |s| s.len() == 2);
-        let four = find(&seg.segments,|s| s.len() == 4);
-        let seven = find(&seg.segments,|s| s.len() == 3);
-        let eight = find(&seg.segments,|s| s.len() == 7);
+        let four = find(&seg.segments, |s| s.len() == 4);
+        let seven = find(&seg.segments, |s| s.len() == 3);
+        let eight = find(&seg.segments, |s| s.len() == 7);
         println!(
             "One = {:?}, Four = {:?}, Seven = {:?}, Eight = {:?}",
             one, four, seven, eight
@@ -70,7 +70,7 @@ fn main() {
     println!("Total: {}", total_num);
 }
 
-fn find<P>(vec: &Vec<Vec<char>>, predicate: P) -> Vec<char>
+fn find<P>(vec: &[Vec<char>], predicate: P) -> Vec<char>
 where
     P: FnMut(&Vec<char>) -> bool,
 {
