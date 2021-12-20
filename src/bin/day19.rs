@@ -58,16 +58,14 @@ fn main() {
                 let (scanner_pos, overlaps) = check_overlap(&known_beacons, &current);
                 if overlaps >= 12 {
                     println!("Overlaps detected with {}", pos);
-                    let mut converted = Vec::new();
                     for pos in &current {
                         let target = [
                             pos[0] + scanner_pos[0],
                             pos[1] + scanner_pos[1],
                             pos[2] + scanner_pos[2],
                         ];
-                        converted.push(target);
+                        known_beacons.insert(target);
                     }
-                    known_beacons.extend(converted);
                     known_scanner.push(scanner_pos);
                     scanners.remove(pos);
                     progress = true;
@@ -96,8 +94,7 @@ fn main() {
 }
 
 fn rotate(vecs: &[[i32; 3]], rotation: &(i32, i32, i32, i32, i32, i32)) -> Vec<[i32; 3]> {
-    vecs.iter()
-        .copied()
+    vecs.into_iter()
         .map(|xyz| {
             [
                 xyz[rotation.0 as usize] * rotation.3,
